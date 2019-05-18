@@ -8,7 +8,9 @@ const app : express.Application = express();
 const port = process.env.PORT || 4000;
 
 app.use(cors());
-app.use(express.static("client-static"));
+if(process.env.NODE_ENV !== 'development') {
+    app.use(express.static(__dirname + '/../node_modules/@mockus/client/build/'));
+}
 app.use( bodyParser.json() );
 
 app.get('/favicon.ico', (req, res) => res.status(204));

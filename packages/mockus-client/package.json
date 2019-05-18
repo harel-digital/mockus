@@ -1,8 +1,11 @@
 {
-  "name": "mockus-client",
+  "name": "@mockus/client",
   "proxy": "http://localhost:4000/",
   "version": "0.1.0",
   "private": true,
+  "files": [
+    "./build/"
+  ],
   "dependencies": {
     "react": "^16.8.6",
     "react-ace": "^6.5.0",
@@ -21,7 +24,7 @@
   "devDependencies": {
     "brace": "^0.11.1"
   },
-  "browserslist": {
+  "browserslist": { 
     "production": [
       ">0.2%",
       "not dead",
