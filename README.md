@@ -1,17 +1,17 @@
 # Mockus
 ---
-Stop wasting time mocking APIs. MockIt gives you an interface to configure and create REAL mocked endpoints for your applications. Whilst you wait for APIS to be built use MockIt to talk to a real service.
+Http endpoint mocking and configuring solution, with easy and simple to use web knterface, which updates immediatly on save, with no need to restart!
 
 ![Mockus](https://i.imgur.com/ryIVgzb.jpg)
 
 ---
 ## The problem
-When building applications you often need to interact with services. When the services are not ready to be consumed you have a few options:
+When you want to run integrations tests, or just want to build your app independently without any active backend, you have few options:
 
 - Mock out the response with a JSON file
 - Create a mock service yourself
-- Use Mockus.
+- Use Mockus!
 
 ---
 ## This Solution
-This tool was designed to help developers quickly create endpoints for their applications. No need to create a server, just run this project locally. You can create, edit and manage routes to your API. Every change to the API will be reflected on the server and updated straight away.
+This tool was designed to help developers and qa testers quickly create endpoints for their applications. No need to create a server, just run this project locally. You can create, edit and manage routes to your API. Every change to the API will be reflected on the server and updated straight away.
