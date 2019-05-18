@@ -1,0 +1,18 @@
+{
+    "responseTypes" : [{
+        "value": "JSON",
+        "text": "application/json"
+    }, {
+        "value": "HTML",
+        "text": "text/html"
+    }, {
+        "value": "TEXT",
+        "text": "text/plain"
+    }, {
+        "value": "XML",
+        "text": "application/xml"
+    }, {
+        "value": "Javascript",
+        "text": "javascript"
+    }]
+}
