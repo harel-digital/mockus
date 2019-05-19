@@ -19,15 +19,30 @@ This tool was designed to help developers and qa testers quickly create endpoint
 ### Installing
 ```
 $ git clone https://github.com/harel-digital/mockus/
+$ cd mockus
 $ npm i
 $ lerna bootstrap
 ```
+---
+### Development
+Client:
+```
+$ cd packages/mockus-client && npm start
+```
+Server:
+```
+$ cd packages/mockus-server && npm start
+```
+On your browser, access: http://localhost:3000/
+
 ---
 ### Deploying
 ```
 $ lerna bootstrap --production
 $ NODE_ENV=production node packages/mockus-server/lib/index.js
 ```
+On your browser, access: http://localhost:4000/
+
 ---
 ### License
 Mockus is [MIT licensed.](https://github.com/harel-digital/mockus/blob/master/LICENSE)
