@@ -38,7 +38,7 @@ On your browser, access: http://localhost:3000/
 ---
 ### Deploying
 ```
-$ lerna bootstrap --production
+$ lerna bootstrap -- --production
 $ NODE_ENV=production node packages/mockus-server/lib/index.js
 ```
 On your browser, access: http://localhost:4000/
