@@ -1,5 +1,4 @@
 # Mockus
----
 Http endpoint mocking and configuring solution, with easy and simple to use web interface, which updates immediatly on save, with no need to restart!
 
 ![Mockus](https://i.imgur.com/ryIVgzb.jpg)
@@ -13,5 +12,22 @@ When you want to run integrations tests, or just want to build your app independ
 - Use Mockus!
 
 ---
-## This Solution
+## The Solution
 This tool was designed to help developers and qa testers quickly create endpoints for their applications. No need to create a server, just run this project localy. You can create, edit and manage routes to your API. Every change to the API will be reflected on the server and updated straight away.
+
+---
+### Installing
+```
+$ git clone https://github.com/harel-digital/mockus/
+$ npm i
+$ lerna bootstrap
+```
+---
+### Deploying
+```
+$ lerna bootstrap --production
+$ NODE_ENV=production node packages/mockus-server/lib/index.js
+```
+---
+### License
+Mockus is [MIT licensed.](https://github.com/harel-digital/mockus/blob/master/LICENSE)

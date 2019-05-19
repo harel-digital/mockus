@@ -6,7 +6,8 @@
   "scripts": {
     "tsc": "tsc",
     "tsc:watch": "tsc --watch",
-    "start": "node lib/index.js"
+    "start": "node lib/index.js",
+    "prepublish" : "npm run tsc"
   },
   "repository": {
     "type": "git",
