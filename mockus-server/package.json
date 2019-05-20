@@ -13,7 +13,7 @@
     "url": "Avihay Menahem"
   },
   "author": "Avihay Menahem",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@types/body-parser": "^1.17.0",
     "@types/cors": "^2.8.5",
