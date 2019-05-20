@@ -1,7 +1,7 @@
 # Mockus
 Http endpoint mocking and configuring solution, with easy and simple to use web interface, which updates immediatly on save, with no need to restart!
 
-![Mockus](https://i.imgur.com/ryIVgzb.jpg)
+![Mockus](https://i.imgur.com/5z2uWzw.jpg)
 
 ---
 ## The problem
