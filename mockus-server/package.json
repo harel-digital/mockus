@@ -6,8 +6,7 @@
   "scripts": {
     "tsc": "tsc",
     "tsc:watch": "tsc --watch",
-    "start": "node lib/index.js",
-    "prepublish": "npm run tsc"
+    "start": "node lib/index.js"
   },
   "repository": {
     "type": "git",
@@ -24,7 +23,6 @@
     "typescript": "^3.4.5"
   },
   "dependencies": {
-    "@mockus/client": "^0.0.1",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.0",

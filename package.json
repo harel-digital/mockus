@@ -1,7 +1,19 @@
 {
-  "name": "root",
-  "private": true,
-  "devDependencies": {
-    "lerna": "^3.14.1"
-  }
+  "name": "mockus",
+  "version": "1.0.0",
+  "description": "Http endpoint mocking and configuring solution, with easy and simple to use web interface, which updates immediatly on save, with no need to restart!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/harel-digital/mockus.git"
+  },
+  "author": "Avihay Menahem",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/harel-digital/mockus/issues"
+  },
+  "homepage": "https://github.com/harel-digital/mockus#readme"
 }

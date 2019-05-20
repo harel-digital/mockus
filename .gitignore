@@ -4,7 +4,6 @@ node_modules
 
 lib
 build
-client-static
 
 .DS_Store
 

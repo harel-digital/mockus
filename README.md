@@ -16,29 +16,31 @@ When you want to run integrations tests, or just want to build your app independ
 This tool was designed to help developers and qa testers quickly create endpoints for their applications. No need to create a server, just run this project localy. You can create, edit and manage routes to your API. Every change to the API will be reflected on the server and updated straight away.
 
 ---
-### Install
+### Development
 ```
 $ git clone https://github.com/harel-digital/mockus/
 $ cd mockus
-$ npm i
-$ lerna bootstrap
 ```
----
-### Development
 Client:
 ```
-$ cd packages/mockus-client && npm start
+$ cd mockus-client
+$ npm i
+$ npm start
 ```
+
 Server:
 ```
-$ cd packages/mockus-server && npm start
+$ cd mockus-server
+$ npm i
+$ npm run tsc
+$ npm start
 ```
 On your browser, access: http://localhost:3000/
 
 ---
 ### Deployment
 ```
-$ lerna bootstrap -- --production
+$ sh scripts/build_release.sh
 $ NODE_ENV=production node packages/mockus-server/lib/index.js
 ```
 On your browser, access: http://localhost:4000/
