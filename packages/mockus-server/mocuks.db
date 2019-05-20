@@ -1,0 +1,1 @@
+{"path":"/test","method":"GET","responseObjectType":"JSON","responseCode":200,"delay":0,"responseBody":"{\n    \"ok\" : \"ok\"\n}","headers":[{"key":"Access-Control-Allow-Origin","value":"*"},{}],"_id":"vdV6Ojx8dDa41d7a"}

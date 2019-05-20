@@ -58,6 +58,7 @@ export default class ResponseHeadersTable extends Component {
                                     <Input
                                         fluid
                                         transparent
+                                        placeholder="key"
                                         onFocus={this.onCellInputFocus(index)}
                                         onChange={this.onCellInputChange("key", index)}
                                         value={header.key}/>
@@ -66,6 +67,7 @@ export default class ResponseHeadersTable extends Component {
                                     <Input
                                         fluid
                                         transparent
+                                        placeholder="value"
                                         onFocus={this.onCellInputFocus(index)}
                                         onChange={this.onCellInputChange("value", index)}
                                         value={header.value}/>

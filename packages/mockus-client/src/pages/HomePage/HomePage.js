@@ -1,17 +1,12 @@
 import React, { Component, Fragment } from 'react';
-import AceEditor from 'react-ace';
-import { Grid, Card, Icon, Input, Select, Button, Segment } from 'semantic-ui-react';
+import { Grid, Card, Icon, Button, Segment } from 'semantic-ui-react';
 import WithLayout from '../../HOC/WithLayout';
 import ProjectList from '../../components/ProjectList/ProjectList';
 import APIGateway, { ApiGateway } from '../../services/APIGateway';
-
-import { statusCodes } from '../../StaticData/StatusCodes.json';
-import { responseTypes } from '../../StaticData/ResponseTypes.json';
-import { httpMethods} from '../../StaticData/HTTPMethods.json';
+import RouteFormComponent from '../../components/RouteFormComponent';
 
 import 'brace/mode/javascript';
 import 'brace/theme/monokai';
-import ResponseHeadersTable from '../../components/ResponseHeadersTable';
 
 class HomePage extends Component {
 
@@ -38,62 +33,7 @@ class HomePage extends Component {
         };
     }
 
-    renderStatusCodeDropdown() {
-        const options = statusCodes.map(stCode => {
-            return {
-                key: stCode.code,
-                value: stCode.code,
-                text: `${stCode.code} - ${stCode.text}`
-            }
-        });
-
-        return (
-            <Select
-                fluid
-                value={this.state.endpointData.responseCode}
-                onChange={this.onFormItemChange('responseCode')}
-                placeholder='Status Code'
-                options={options}/>
-        );
-    }
-
-    renderResponseTypeDropdown() {
-        const options = responseTypes.map(rt => {
-            return {
-                key: rt.value,
-                value: rt.value,
-                text: rt.text
-            }
-        });
-
-        return (
-            <Select
-                fluid
-                value={this.state.endpointData.responseObjectType.toUpperCase()}
-                onChange={this.onFormItemChange('responseObjectType')}
-                placeholder='Response Type'
-                options={options} />
-        );
-    }
-
-    renderHTTPMethodDropdown() {
-        const options = httpMethods.map(method => {
-            return {
-                key: method,
-                value: method,
-                text: method
-            }
-        });
-        return (
-            <Select
-                value={this.state.endpointData.method.toUpperCase()}
-                onChange={this.onFormItemChange('method')}
-                placeholder='Method'
-                options={options}/>
-        );
-    }
-
-    onNewEndpointButtonClicked = () => {
+    onSaveButtonClicked = () => {
         this.setState({ isLoading: true });
 
         const currentEndpoint = this.state.endpointData;
@@ -112,7 +52,7 @@ class HomePage extends Component {
         this.setState({ endpointData : this.getEmptyEndpointDataObject() })
     }
 
-    onDeleteEndpointButtonClicked = (id) => {
+    onDeleteButtonClicked = (id) => {
         return () => {
             APIGateway.deleteProject(id).then(res => res.json()).then(res => {
                 this.setState({
@@ -123,36 +63,8 @@ class HomePage extends Component {
         }
     }
 
-    onFormItemChange = (propertyName) => {
-        return (e, { value }) => {
-            
-            //eslint-disable-next-line default-case
-            switch(propertyName) {
-                case "path":
-                    if(!value.trim()) {
-                        value = "/";
-                    }
-                    
-                    if(!value.startsWith("/")) {
-                        value = `/${value}`;
-                    }
-                    break;
-            }
-
-            const currentEndpointObject = this.state.endpointData;
-            currentEndpointObject[propertyName] = value || e.value || e;
-            this.setState({ endpointData: currentEndpointObject });
-        }
-    }
-
     onProjectItemClick = (item) => {
         this.setState({ endpointData: item });
-    }
-
-    onHeadersChanged = (newHeaders) => {
-        const currentEndpointObject = this.state.endpointData;
-        currentEndpointObject.headers = newHeaders;
-        this.setState({ endpointData: currentEndpointObject });
     }
 
     onGoToButtonClick = () => {
@@ -165,11 +77,15 @@ class HomePage extends Component {
         }
     }
 
+    onRouteFormChanged = (routeObject) => {
+
+    }
+
     render() {
         const activeObj = this.state.endpointData;
         return (
             <div>
-                <Grid style={{ marginTop: 62 }}>
+                <Grid style={{ marginTop: 62 }}>                    
                     <Grid.Row>
                         <Grid.Column width={4}>
                             <ProjectList
@@ -178,65 +94,20 @@ class HomePage extends Component {
                         </Grid.Column>
                         <Grid.Column width={12}>
                             <Segment>
-                                <Button size='mini' color='green' onClick={this.onNewEndpointButtonClicked}>Save</Button>
+                                <Button size='mini' color='green' onClick={this.onSaveButtonClicked}>Save</Button>
                                 <Button size='mini' color='orange' onClick={this.onResetButtonClicked}>Reset</Button>
                                 {activeObj._id ? (
                                     <Fragment>
-                                        <Button onClick={this.onDeleteEndpointButtonClicked(activeObj._id)} size='mini' color='red'>Delete</Button>
+                                        <Button onClick={this.onDeleteButtonClicked(activeObj._id)} size='mini' color='red'>Delete</Button>
                                         <Button onClick={this.onGoToButtonClick} size='mini' color='blue' floated='right'>Go to: {activeObj.path}</Button>
                                     </Fragment>
                                 ) : ''}
                             </Segment>
                             <Card fluid>
                                 <Card.Content>
-                                    <Grid>
-                                        <Grid.Row>
-                                            <Grid.Column width={16}>
-                                                <Input
-                                                    onChange={this.onFormItemChange('path')}
-                                                    value={activeObj.path}
-                                                    fluid
-                                                    placeholder='/example-url'
-                                                    labelPosition='right'
-                                                    label={this.renderHTTPMethodDropdown()}/>
-                                            </Grid.Column>
-                                        </Grid.Row>
-                                        <Grid.Row>
-                                            <Grid.Column width={6}>
-                                                {this.renderStatusCodeDropdown()}
-                                            </Grid.Column>
-                                            <Grid.Column width={6}>
-                                                {this.renderResponseTypeDropdown()}
-                                            </Grid.Column>
-                                            <Grid.Column floated='right' width={4}>
-                                                <Input
-                                                    fluid
-                                                    value={activeObj.delay}
-                                                    onChange={this.onFormItemChange('delay')}
-                                                    placeholder='Delay'
-                                                    type='number'/>
-                                            </Grid.Column>
-                                        </Grid.Row>
-                                        <Grid.Row>
-                                            <Grid.Column width={16}>
-                                                <ResponseHeadersTable onHeadersChanged={this.onHeadersChanged} headers={activeObj.headers}/>
-                                            </Grid.Column>
-                                        </Grid.Row>
-                                        <Grid.Row>
-                                            <Grid.Column width={16}>
-                                                <AceEditor
-                                                    mode="javascript"
-                                                    theme="monokai"
-                                                    onChange={this.onFormItemChange('responseBody')}
-                                                    value={activeObj.responseBody}
-                                                    width="100%"
-                                                    name="Editor"
-                                                    showPrintMargin={false}
-                                                    editorProps={{$blockScrolling: true}}/>
-                                            </Grid.Column>
-                                        </Grid.Row>
-                                    </Grid>
-
+                                    <RouteFormComponent
+                                        onChange={this.onRouteFormChanged}
+                                        routeObject={this.state.endpointData}/>
                                 </Card.Content>
                                 <Card.Content extra>
                                     <Icon name='exclamation circle'/>
