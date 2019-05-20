@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Form, Input, Select, Grid } from 'semantic-ui-react';
+import { Form, Input, Select, Grid, Dropdown } from 'semantic-ui-react';
 import { isEqual } from 'lodash';
 import AceEditor from 'react-ace';
 
@@ -16,7 +16,9 @@ import 'brace/theme/monokai';
 export default class RouteFormComponent extends Component {
     static propTypes = {
         routeObject: PropTypes.any.isRequired,
-        onChange: PropTypes.func.isRequired
+        onChange: PropTypes.func.isRequired,
+        groups: PropTypes.arrayOf(PropTypes.string).isRequired,
+        onAddExtraGroupItem: PropTypes.func
     };
     
     constructor(props) {
@@ -66,6 +68,35 @@ export default class RouteFormComponent extends Component {
                 onChange={this.onFormItemChange('responseCode')}
                 placeholder='Status Code'
                 options={options}/>
+        );
+    }
+
+    onAddGroupitem = (e, {value}) => {
+        if(this.props.onAddExtraGroupItem) {
+            this.props.onAddExtraGroupItem(value);
+        }
+    }
+
+    renderGroupDropdown() {
+        let options = this.props.groups.length ? this.props.groups.map(group => {
+            return {
+                key: group,
+                value: group,
+                text: group
+            }
+        }) : [];
+
+        return (
+            <Dropdown
+                fluid
+                search
+                selection
+                allowAdditions
+                value={this.props.routeObject.group}
+                onChange={this.onFormItemChange('group')}
+                placeholder='Group'
+                onAddItem={this.onAddGroupitem}
+                options={options} />
         );
     }
 
@@ -132,11 +163,15 @@ export default class RouteFormComponent extends Component {
                     </Form.Field>
                 </Form.Group>
                 <Form.Group as={Grid.Row}>
-                    <Form.Field as={Grid.Column} width={6}>
+                    <Form.Field as={Grid.Column} width={4}>
+                        <label>Group</label>
+                        {this.renderGroupDropdown()}
+                    </Form.Field>
+                    <Form.Field as={Grid.Column} width={4}>
                         <label>Response code</label>
                         {this.renderResponseCodeDropdown()}
                     </Form.Field>
-                    <Form.Field as={Grid.Column} width={6}>
+                    <Form.Field as={Grid.Column} width={4}>
                         <label>Response type</label>
                         {this.renderResponseTypeDropdown()}
                     </Form.Field>

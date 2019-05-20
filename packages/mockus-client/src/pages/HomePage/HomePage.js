@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Grid, Card, Icon, Button, Segment } from 'semantic-ui-react';
+import { Grid, Icon, Button, Segment } from 'semantic-ui-react';
 import { truncate } from 'lodash';
 import WithLayout from '../../HOC/WithLayout';
 import ProjectList from '../../components/ProjectList/ProjectList';
@@ -12,6 +12,7 @@ import 'brace/theme/monokai';
 class HomePage extends Component {
 
     state = {
+        tempExtraGroups: [],
         projects: [],
         endpointData : this.getEmptyEndpointDataObject()
     }
@@ -20,8 +21,29 @@ class HomePage extends Component {
         this.setState({ projects : await APIGateway.getAllProjects() });
     }
 
+    getProjectsGroups() {
+        const currentProjects = this.state.projects;
+        let groups = [];
+        if(!currentProjects.length) return groups;
+
+        currentProjects.forEach(project => {
+            let groupName = project.group;
+            if(groupName !== undefined && !groups.includes(groupName)) {
+                if(groupName === "") {
+                    groupName = "None";
+                }
+                groups.push(groupName);
+            }
+        });
+        
+        groups = groups.concat(this.state.tempExtraGroups);
+
+        return groups.sort();
+    }
+
     getEmptyEndpointDataObject() {
         return {
+            group: 'None',
             path: "/",
             method: "GET",
             responseObjectType: "JSON",
@@ -31,6 +53,12 @@ class HomePage extends Component {
             headers: [{key: "Access-Control-Allow-Origin", value: "*"}]
         };
     }
+
+    onAddExtraGroupitem = (groupName) => {
+        const currentExtraGroups = this.state.tempExtraGroups;
+        currentExtraGroups.push(groupName);
+        this.setState({ tempExtraGroups : currentExtraGroups });
+    };
 
     onSaveButtonClicked = () => {
         const currentEndpoint = this.state.endpointData;
@@ -101,17 +129,13 @@ class HomePage extends Component {
                                     </Fragment>
                                 ) : ''}
                             </Segment>
-                            <Card fluid>
-                                <Card.Content>
-                                    <RouteFormComponent
-                                        onChange={this.onRouteFormChanged}
-                                        routeObject={activeObj}/>
-                                </Card.Content>
-                                <Card.Content extra>
-                                    <Icon name='exclamation circle'/>
-                                    Configure your http endpoint here.
-                                </Card.Content>
-                            </Card>
+                            <Segment stacked>
+                                <RouteFormComponent
+                                    groups={this.getProjectsGroups()}
+                                    onAddExtraGroupItem={this.onAddExtraGroupitem}
+                                    onChange={this.onRouteFormChanged}
+                                    routeObject={activeObj}/>
+                            </Segment>
                         </Grid.Column>
                     </Grid.Row>
                 </Grid>
