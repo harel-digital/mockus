@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Grid, Label, Icon } from 'semantic-ui-react';
+import { Card, Grid, Label } from 'semantic-ui-react';
 
 export default function ProjectListItem(props) {
     const { path, method } = props.object;
@@ -7,10 +7,7 @@ export default function ProjectListItem(props) {
         <Card.Content onClick={props.onClick}>
             <Grid>
                 <Grid.Row>
-                    <Grid.Column width={2}>
-                        <Icon name='globe'/>
-                    </Grid.Column>
-                    <Grid.Column width={10}>
+                    <Grid.Column width={12} style={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
                         {path}
                     </Grid.Column>
                     <Grid.Column width={4}>

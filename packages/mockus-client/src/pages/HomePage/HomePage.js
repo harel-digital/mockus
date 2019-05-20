@@ -95,7 +95,9 @@ class HomePage extends Component {
                                 {activeObj._id ? (
                                     <Fragment>
                                         <Button onClick={this.onDeleteButtonClicked(activeObj._id)} size='mini' color='red' icon='delete'/>
-                                        <Button onClick={this.onGoToButtonClick} size='mini' color='blue' floated='right'>Go to: {truncate(activeObj.path, { length: 15 })}</Button>
+                                        <Button onClick={this.onGoToButtonClick} size='mini' color='blue' floated='right' icon labelPosition='left'>
+                                            <Icon name='paper plane' />{truncate(activeObj.path, { length: 15 })}
+                                        </Button>
                                     </Fragment>
                                 ) : ''}
                             </Segment>
