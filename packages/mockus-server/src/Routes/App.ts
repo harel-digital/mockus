@@ -25,7 +25,7 @@ router.post("/:id", (req, res) => {
 });
 
 router.get("/export", (req, res) => {
-    const filePath = path.join(__dirname, '..', '..', 'mockus.db');
+    const filePath = path.join(process.cwd(), 'DB', 'mockus.db');
     res.download(filePath, 'mockus.db');
 });
 

@@ -1,3 +1,4 @@
+import path from 'path';
 import Datastore from 'nedb';
 import ProjectModel from './Models/ProjectModel';
 
@@ -6,7 +7,7 @@ class ProjectDAL {
     
     constructor() {
         this.db = new Datastore({
-            filename: './mocuks.db',
+            filename: path.join(process.cwd(), 'DB', 'mockus.db'),
             autoload: true
         });
     }

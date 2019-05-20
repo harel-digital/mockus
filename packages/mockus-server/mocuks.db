@@ -1,4 +1,0 @@
-{"path":"/test","method":"GET","responseObjectType":"JSON","responseCode":200,"delay":0,"responseBody":"{\n    \"ok\" : \"ok\"\n}","headers":[{"key":"Access-Control-Allow-Origin","value":"*"},{}],"_id":"vdV6Ojx8dDa41d7a"}
-{"path":"/test","method":"GET","responseObjectType":"JSON","responseCode":202,"delay":0,"responseBody":"{\n    \"ok\" : \"ok\"\n}","headers":[{"key":"Access-Control-Allow-Origin","value":"*"},{"key":"okey","value":"dokey"},{}],"_id":"vdV6Ojx8dDa41d7a"}
-{"path":"/api/helloworld","method":"GET","responseObjectType":"JSON","responseCode":200,"delay":0,"responseBody":"{}","headers":[{"key":"Access-Control-Allow-Origin","value":"*"}],"_id":"X5uQSpFBkewLAttn"}
-{"path":"/api/helloworld","method":"GET","responseObjectType":"JSON","responseCode":202,"delay":0,"responseBody":"{}","headers":[{"key":"Access-Control-Allow-Origin","value":"*"}],"_id":"X5uQSpFBkewLAttn"}
