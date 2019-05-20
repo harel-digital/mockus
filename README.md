@@ -45,12 +45,9 @@ On your browser, access: http://localhost:4000/
 
 ---
 ### Open Issues
-- [ ] Add form labels
 - [ ] Disable duplicate routes
 - [ ] Add support for persistent DB
 - [ ] Support dynamic routes (/path/:var)
-- [ ] Add path grouping
-- [ ] Take out form from home page to own component
 
 ---
 ### License
