@@ -39,8 +39,19 @@ On your browser, access: http://localhost:3000/
 
 ---
 ### Deployment
+
+Mac / Linux users
 ```
 $ sh scripts/build_release.sh
+```
+
+Windows users (powrshell / git bash)
+```
+$ scripts/build_release.sh
+```
+
+And then
+```
 $ NODE_ENV=production node packages/mockus-server/lib/index.js
 ```
 On your browser, access: http://localhost:4000/
