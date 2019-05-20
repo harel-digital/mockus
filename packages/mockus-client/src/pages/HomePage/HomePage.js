@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Grid, Card, Icon, Button, Segment } from 'semantic-ui-react';
+import { truncate } from 'lodash';
 import WithLayout from '../../HOC/WithLayout';
 import ProjectList from '../../components/ProjectList/ProjectList';
 import APIGateway, { ApiGateway } from '../../services/APIGateway';
@@ -11,9 +12,7 @@ import 'brace/theme/monokai';
 class HomePage extends Component {
 
     state = {
-        isLoading: true,
         projects: [],
-        currentProjectId: 0,
         endpointData : this.getEmptyEndpointDataObject()
     }
 
@@ -34,14 +33,11 @@ class HomePage extends Component {
     }
 
     onSaveButtonClicked = () => {
-        this.setState({ isLoading: true });
-
         const currentEndpoint = this.state.endpointData;
         const action = currentEndpoint._id ? "updateProject" : "insertNewProject";
 
         APIGateway[action](currentEndpoint).then(res => res.json()).then(res => {
             this.setState({
-                isLoading: false,
                 projects : res,
                 endpointData: this.getEmptyEndpointDataObject()
             });  
@@ -78,7 +74,7 @@ class HomePage extends Component {
     }
 
     onRouteFormChanged = (routeObject) => {
-
+        this.setState({ endpointData: routeObject })
     }
 
     render() {
@@ -94,12 +90,12 @@ class HomePage extends Component {
                         </Grid.Column>
                         <Grid.Column width={12}>
                             <Segment>
-                                <Button size='mini' color='green' onClick={this.onSaveButtonClicked}>Save</Button>
+                                <Button size='mini' color='green' onClick={this.onSaveButtonClicked} icon='save'/>
                                 <Button size='mini' color='orange' onClick={this.onResetButtonClicked}>Reset</Button>
                                 {activeObj._id ? (
                                     <Fragment>
-                                        <Button onClick={this.onDeleteButtonClicked(activeObj._id)} size='mini' color='red'>Delete</Button>
-                                        <Button onClick={this.onGoToButtonClick} size='mini' color='blue' floated='right'>Go to: {activeObj.path}</Button>
+                                        <Button onClick={this.onDeleteButtonClicked(activeObj._id)} size='mini' color='red' icon='delete'/>
+                                        <Button onClick={this.onGoToButtonClick} size='mini' color='blue' floated='right'>Go to: {truncate(activeObj.path, { length: 15 })}</Button>
                                     </Fragment>
                                 ) : ''}
                             </Segment>
@@ -107,7 +103,7 @@ class HomePage extends Component {
                                 <Card.Content>
                                     <RouteFormComponent
                                         onChange={this.onRouteFormChanged}
-                                        routeObject={this.state.endpointData}/>
+                                        routeObject={activeObj}/>
                                 </Card.Content>
                                 <Card.Content extra>
                                     <Icon name='exclamation circle'/>
