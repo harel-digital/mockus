@@ -9,7 +9,7 @@ const port = process.env.PORT || 4000;
 
 app.use(cors());
 if(process.env.NODE_ENV !== 'development') {
-    app.use(express.static(__dirname + '/../node_modules/@mockus/client/build/'));
+    app.use(express.static('build'));
 }
 app.use( bodyParser.json() );
 
