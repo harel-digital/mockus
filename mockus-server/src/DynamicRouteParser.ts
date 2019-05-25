@@ -15,22 +15,48 @@ export default class DynamicRouteParser {
         this.parseAndServeRoute();
     }
 
+    findRouteObject(url, method, documents) {
+        return documents.find((doc:ProjectModel) => {
+            let documentMethod = StringUtils.cleanAndLower(doc.method);
+            let documentPath = StringUtils.cleanAndLower(doc.path);
+
+            method = StringUtils.cleanAndLower(method);
+            url = StringUtils.cleanAndLower(url);
+
+            if(method !== documentMethod) return;
+
+            if(documentPath.includes(":")) {
+                const savedRouteParts = documentPath.split("/");
+                const currentRouteParts = url.split("/");
+                let builtRouteFromTemplatedUrl = '';
+                savedRouteParts.forEach((part, i) => {
+                    if(!part.length) return;
+                    builtRouteFromTemplatedUrl += `/${part.includes(":") ? currentRouteParts[i] : part}`;
+                });
+
+                return builtRouteFromTemplatedUrl === url;
+            }
+            
+            return url === documentPath;
+        });
+    }
+
     parseAndServeRoute() {
         const { url, method } = this.request;
 
         ProjectDAL.getAllProjects()
             .then((docs) => {
                 if(!docs.length) {
-                    this.response.send("NO PROJECTS EXIST");
+                    this.response.status(500).json({
+                        message: 'No projects exists'
+                    });
                     return;
                 }
 
-                let foundDoc = docs.find((doc:ProjectModel) =>
-                    StringUtils.cleanAndLower(doc.method) ===  StringUtils.cleanAndLower(method)
-                    && StringUtils.cleanAndLower(url).startsWith(StringUtils.cleanAndLower(doc.path)));
+                let foundDoc = this.findRouteObject(url, method, docs);
 
                 if(foundDoc) {
-                    const responseBody = JSON.parse( foundDoc.responseBody);
+                    const responseBody = JSON.parse(foundDoc.responseBody);
 
                     const response = this.response;
                     let responseAction = "send";
@@ -60,9 +86,11 @@ export default class DynamicRouteParser {
                     setTimeout((() => response.status(foundDoc.responseCode)[responseAction](responseBody)), foundDoc.delay);
                     return;
                 } else {
-                    this.response.status(500).json({status: "bad request"});
+                    this.response.status(500).json({message: "bad request"});
                     return;
                 }
             });
     }
+
+
 }
