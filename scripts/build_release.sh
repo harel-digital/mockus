@@ -21,5 +21,3 @@ echo "#### Removing development node_modules folder"
 rm -rf node_modules
 echo "#### Installing production node_modules"
 npm i --production
-echo "#### Waiting for input"
-read
