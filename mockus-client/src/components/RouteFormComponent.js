@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Form, Input, Select, Grid, Dropdown } from 'semantic-ui-react';
+import { Form, Input, Select, Grid, Dropdown, GridColumn } from 'semantic-ui-react';
 import { isEqual } from 'lodash';
 import AceEditor from 'react-ace';
 
@@ -10,8 +10,36 @@ import { statusCodes } from '../StaticData/StatusCodes.json';
 import { responseTypes } from '../StaticData/ResponseTypes.json';
 import { httpMethods} from '../StaticData/HTTPMethods.json';
 
-import 'brace/mode/javascript';
-import 'brace/theme/monokai';
+import "brace/ext/language_tools";
+
+const languages = [
+    'json',
+    'javascript',
+    'html',
+    'xml'
+];
+
+const themes = [
+    "monokai",
+    "github",
+    "tomorrow",
+    "kuroir",
+    "twilight",
+    "xcode",
+    "textmate",
+    "solarized_dark",
+    "solarized_light",
+    "terminal"
+];
+
+themes.forEach(theme => {
+    require(`brace/theme/${theme}`);
+});
+
+languages.forEach(lang => {
+    require(`brace/mode/${lang}`);
+    require(`brace/snippets/${lang}`);
+});
 
 export default class RouteFormComponent extends Component {
     static propTypes = {
@@ -25,7 +53,9 @@ export default class RouteFormComponent extends Component {
         super(props);
 
         this.state = {
-            routeObject: props.routeObject
+            routeObject: props.routeObject,
+            theme: 'monokai',
+            syntaxLanguage: 'json'
         }
     }
 
@@ -195,14 +225,31 @@ export default class RouteFormComponent extends Component {
                     <Form.Field as={Grid.Column} width={16}>
                         <label>Response object</label>
                         <AceEditor
-                            mode="javascript"
-                            theme="monokai"
+                            mode={this.state.syntaxLanguage}
+                            theme={this.state.theme}
                             onChange={this.onFormItemChange('responseBody')}
                             value={routeObject.responseBody}
                             width="100%"
                             name="Editor"
                             showPrintMargin={false}
                             editorProps={{$blockScrolling: true}}/>
+                    </Form.Field>
+                </Form.Group>
+
+                <Form.Group as={Grid.Row}>
+                    <Form.Field as={GridColumn} width={8}>
+                        <label>Theme</label>
+                        <Dropdown
+                            onChange={(e, { value }) => this.setState({theme: value})}
+                            selection
+                            options={themes.map(theme => ({text: theme, value: theme, key: theme}))}/>
+                    </Form.Field>
+                    <Form.Field as={GridColumn} width={8}>
+                        <label>Language</label>
+                        <Dropdown
+                            onChange={(e, { value }) => this.setState({syntaxLanguage: value})}
+                            selection
+                            options={languages.map(lang => ({text: lang, value: lang, key: lang}))}/>
                     </Form.Field>
                 </Form.Group>
             </Form>
