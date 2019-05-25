@@ -38,7 +38,7 @@ $ npm start
 On your browser, access: http://localhost:3000/
 
 ---
-### Deployment
+### Build/Deployment
 
 Mac / Linux users
 ```
@@ -58,8 +58,7 @@ On your browser, access: http://localhost:4000/
 
 ---
 ### Open Issues
-- [ ] Add support for persistent DB
-- [ ] Support dynamic routes (/path/:var)
+- [ ] Add support for persistent DB (Mongo/Redis)
 
 ---
 ### License
