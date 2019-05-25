@@ -58,7 +58,6 @@ On your browser, access: http://localhost:4000/
 
 ---
 ### Open Issues
-- [ ] Disable duplicate routes
 - [ ] Add support for persistent DB
 - [ ] Support dynamic routes (/path/:var)
 

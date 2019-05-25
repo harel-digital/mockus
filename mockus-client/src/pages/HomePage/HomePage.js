@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
-import { Grid, Icon, Button, Segment } from 'semantic-ui-react';
-import { truncate } from 'lodash';
+import { Grid, Icon, Button, Segment, Message } from 'semantic-ui-react';
+import { truncate, find, isEmpty } from 'lodash';
 import WithLayout from '../../HOC/WithLayout';
 import ProjectList from '../../components/ProjectList/ProjectList';
 import APIGateway, { ApiGateway } from '../../services/APIGateway';
@@ -12,6 +12,7 @@ import 'brace/theme/monokai';
 class HomePage extends Component {
 
     state = {
+        errors: [],
         tempExtraGroups: [],
         projects: [],
         endpointData : this.getEmptyEndpointDataObject()
@@ -61,8 +62,20 @@ class HomePage extends Component {
     };
 
     onSaveButtonClicked = () => {
+        this.setState({ errors: [] });
         const currentEndpoint = this.state.endpointData;
         const action = currentEndpoint._id ? "updateProject" : "insertNewProject";
+
+        const { path, method, _id : projectId } = currentEndpoint;
+        const errors = [];
+        
+        const existingSimilarObject = find(this.state.projects, (project) => project.method === method && project.path === path);
+
+        if(isEmpty(projectId) && !isEmpty(existingSimilarObject)) {
+            errors.push("This route and method combination already exists, please try again.");
+            this.setState({ errors });
+            return;
+        };
 
         APIGateway[action](currentEndpoint).then(res => res.json()).then(res => {
             this.setState({
@@ -129,6 +142,15 @@ class HomePage extends Component {
                                     </Fragment>
                                 ) : ''}
                             </Segment>
+                            {this.state.errors.length ? (
+                                <Segment>
+                                    <Message
+                                        warning
+                                        header='There was some errors with your submission'
+                                        list={this.state.errors}
+                                    />
+                                </Segment>
+                            ) : ''}
                             <Segment stacked>
                                 <RouteFormComponent
                                     groups={this.getProjectsGroups()}
